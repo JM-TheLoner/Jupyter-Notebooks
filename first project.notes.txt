@@ -1,0 +1,107 @@
+df means dataframe  
+
+to load it you use df = pd.read_TYPE('filename').    TYPE can be any of the allowed formats [there are 20 types]
+to load text files {.txt} use .read_csv('filename', delimiter = \t) to load it
+\t makes it recognise tabs but if anything else is used to separate columns put that instead as delimiter
+
+try and ensure that the file to be read is in the same directory as the notebook or else you have to supply the full path
+                           
+                            useful methods include:
+df - essentially print(df)
+df.head(int) - returns the first "int" lines of the csv. default int is 5
+df.tail(int) - returns the last "int" lines of the csv. default int is 5
+df.shape - which outputs the format (row, columns), 
+df.columns - outputs the headers of the columns
+df.describe() - returns basic data about each column in the data set
+df.values - returns a 2d array of the values contained in the dataset
+df.drop() - creates a new file without the specified fields. (see in the program how it works)
+                         
+df['text'] / df.Name - outputs all data under the column text
+df['text'][int] - outputs the data under the column text with index 'int'
+df['text'][int:inti] - outputs the data under the column text between indexes 'int' and 'inti' excluding
+df[['text1', 'text2', 'text3']] - gets output data from all columns provided
+{mix and match the 4 above}
+
+df.iloc[int] - prints all data in row with index 'int'
+df.iloc[int:inti] - prints all data in row with index between 'int'and 'inti' excluding 'inti'
+df.iloc[int,inti] - prints all data in row 'int' and column 'inti'
+df.loc[df['attribute'] == 'text'] - prints all data in a row that has attribute equal to text
+
+print(df.sort_values('Name', ascending=True)) - sorts all rows in ascending order of names. if ascending isnt set its defaultis True
+print(df.sort_values(['Type 1', 'Name'], ascending=[0,0])) - sorts all first by type and then by name. {if descending on the second one both ascending values must be set}
+print(df.sort_index()) - sorts rows by index
+
+df.drop(columns = ['name']) - deletes column name
+
+for index, row in df.iterrows():
+    print(index, row['data'])           - to iterate through rows. row by row
+
+                            useful shortcuts
+when in command mode (no blue outline on the cell):
+a - make a cell above
+b - make a cell below
+c - copy cell
+d d - delete current cell
+f - find
+l - toggle line number
+m - change code cell to markdown
+s - save
+v - paste below
+x - cut cell
+y - change markdown cell to code 
+z - undo
+up or down - select upper or lower cell
+shift + up or down - extended select
+enter - change to edit mode
+alt + del - clears output of cell
+
+                            Making changes
+to add a new column that is derived from other column data just call the column by its name: 
+df['new'] = data in it or *df['Total'] = df.iloc[:, 4:10].sum(axis = 1)
+
+                    this is to rearrange columns
+cols = list(df.columns.values)
+c = df[cols[0:5] + [cols[9]] + cols[5:9] + cols[10:]]
+
+                        this is to save work
+df.to_csv('new_file.csv')   (like .read, this isnt only csv)
+df.to_csv('new_file.csv', column = False)  - this exclues column named 'column' in saved work
+like .read you use to_csv but filename.txt     here instead of delimiter its separator
+
+                        to filter data
+df.loc[df['attribute'] == 'text'] - prints all data in a row that has attribute equal to text
+
+if you want to remove those with compound names or based on text
+df.loc[df['name'].str.contains('text')]   - shows all name values with 'text' in it
+for more than one conditions use
+
+for regular expressions:
+import re
+put conditions eg:
+df.loc[df['name'].str.contains('text│hii', regex = True)]  - regex value is necessary
+if you dont want capitalization to matter use   -   flags=re.I
+
+& for and
+│ for or
+~ for not   (shift + #)
+
+            conditional changes(to change based on a filter)
+df.loc[df['attribute'] == 'Fire', 'attribute_1'] = 'Flamer'   -  changes the attribute_1 of all rows with attribute as Fire to Flamer
+{ps. attribute can be equal to attribute_1}
+df.loc[df['attribute'] == 'Fire', ['attribute_1', attribute_2]] = ['Flamer', 'hello']  -  to change more than one. if only one new value is given both specified columns change to the one given value
+                            
+                            to reset index
+df.reset_index(drop = True)   - without drop value set the old index is saved
+df.reset_index(drop = True, inplace = True)   - if you want to save it in old file
+
+                            group by aggregates
+df.groupby(['Type 1']).mean().sort_values('Speed', ascending=False)
+groups into averages basedon 'Type 1' attribute. then it sorts by speed in descending order. {dont understand, look up}
+the sort_values isnt necessary
+you can also do .sum and .count
+you can use more than one type to count
+df.groupby(['Type 1', 'Type 2']).count()
+
+                            Work with Large data
+if file is too large:
+for df in pd.read_csv('filename.csv', chunksize = 5)     - 5 rows at a time in df

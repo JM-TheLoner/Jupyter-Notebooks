@@ -1,0 +1,19 @@
+                            Steps for Machine learning project
+1. Import the Data (Data often comes in a CSV file. if not export the data to one for the project)
+2. Clean the Data (includes: Removing duplicated data, Removing irrelevant data, Remove or modify incomplete data, convert text based data to numerical values etc)
+3. Split data into 2 sets (Training and Test sets)
+4. Create a model (involves selecting an appropriate algorithm for data analysis. these algorithms dont necessarily need to be self-made as there are libraries that contain these)
+5. Train the model (Feed it training data)
+6. Ask it to make predictions
+7. Evaluate and improve (you caan change the algorithm used to test how much improvement there would be or fine-tune the model parameters)
+
+
+                Popular Python Libraries used in Machine learning projects
+NUMPY (provides a multidimensional array)
+PANDAS (a data analysis library that provides data frame(a 2d data structure similar to an excel spreadsheet)) 
+MATPLOTLIB (a 2d plotting library for creating graphs on plots)
+SCIKIT-LEARN (provides common algorithmslike decision trees, neural networks etc)
+
+
+when working on Machine learning we use "JUPYTER" to write our code. we can still use vscode to write it but its not ideal
+cuz we frequently need to inspect the data and that is hard in environments like vscode
